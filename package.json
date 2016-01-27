@@ -21,12 +21,14 @@
   "homepage": "https://github.com/jianglibo/gulp-asciitree#readme",
   "devDependencies": {
     "chai": "^3.4.1",
+    "chalk": "^1.1.1",
     "concat-stream": "^1.5.0",
     "mocha": "^2.1.0",
     "through2": "^2.0.0",
     "vinyl": "^0.5.0"
   },
   "dependencies": {
-    "my-ascii-tree": "^1.0.6"
+    "gulp-util": "^3.0.7",
+    "my-ascii-tree": "^1.0.7"
   }
 }
