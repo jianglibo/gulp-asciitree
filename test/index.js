@@ -1,9 +1,3 @@
-# gulp-asciitree
-convert indented line block to an ascii directory tree
-
-## usage
-
-```
 var chai = require('chai');
 var through = require('through2');
 var assert = require('assert');
@@ -12,12 +6,15 @@ var fs = require('fs');
 var gulpAsciiTree = require('../index');
 var vfs = require('vinyl-fs');
 
+var expect = chai.expect;
+
 describe('AsciiTreePlugin', function() {
   it("should handle buffer mode.", function(done) {
     vfs.src(['./fixtures/tree.txt'])
       .pipe(gulpAsciiTree("{% asciitree %}", "{% endasciitree %}"))
       .pipe(through.obj(function(file, enc, cb) {
-        assert.equal(16, file.contents.toString().split(/[\r\n]+/).length); //because last empty line.
+        console.log(file.contents.toString());
+        assert.equal(19, file.contents.toString().split(/[\r\n]+/).length); //because last empty line.
         cb();
       })).on('finish', function() {
         done();
@@ -34,7 +31,7 @@ describe('AsciiTreePlugin', function() {
           strArray.push(buf.toString(Buffer.isEncoding(enc) ? enc : null));
           cb0();
         })).on('finish', function() {
-          assert.equal(15, strArray.length);
+          assert.equal(18, strArray.length);
           cb();
         });
       })).on('finish', function() {
@@ -42,55 +39,3 @@ describe('AsciiTreePlugin', function() {
       });
   });
 });
-```
-
-in:
-
-```
-abc
-uuu
-{% asciitree %}
-剧情片
--日本的天空下
--朗读者
--北方的金丝雀
--惹人嫌的松子的一生
---bb
-c
--d
-{% endasciitree %}
-日本的天空下
-aa
-{% asciitree %}
-我
--你把
---他的是
-ok
--yes
---right
-{% endasciitree %}
-
-```
-
-out:
-
-```
-abc
-uuu
-├── 剧情片
-|   ├── 日本的天空下
-|   ├── 朗读者
-|   ├── 北方的金丝雀
-|   └── 惹人嫌的松子的一生
-|       └── bb
-└── c
-    └── d
-日本的天空下
-aa
-├── 我
-|   └── 你把
-|       └── 他的是
-└── ok
-    └── yes
-        └── right
-```
